@@ -39,7 +39,6 @@ Contents of the project can be used, with the following terms and conditions:
         -   [Yarn](#yarn)
         -   [PNPM](#pnpm)
         -   [Bun](#bun)
-    -   [Getting Started](#getting-started)
     -   [Available API endpoints:](#available-api-endpoints)
         -   [List all available languages for prayertimes.com](#list-all-available-languages-for-prayertimescom)
         -   [List all categories by language code.](#list-all-categories-by-language-code)

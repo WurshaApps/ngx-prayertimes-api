@@ -1,0 +1,37 @@
+{
+    "name": "@wursha/ngx-prayertimes-api",
+    "version": "0.0.3",
+    "description": "an Angular api client for aladhan.com",
+    "keywords": [
+        "prayertimes",
+        "muhammad",
+        "prophet",
+        "sunna",
+        "islam",
+        "muslim",
+        "api",
+        "angular",
+        "ngx",
+        "prayer times",
+        "prayer"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/WurshaApps/ngx-prayertimes-api.git",
+        "directory": "projects/ngx-prayertimes-api"
+    },
+    "author": "Muhammad Assar <m.assar@outlook.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/WurshaApps/ngx-prayertimes-api/issues"
+    },
+    "homepage": "https://github.com/WurshaApps/ngx-prayertimes-api/tree/main/projects/ngx-prayertimes-api",
+    "peerDependencies": {
+        "@angular/common": "^18.0.0",
+        "@angular/core": "^18.0.0"
+    },
+    "dependencies": {
+        "tslib": "^2.3.0"
+    },
+    "sideEffects": false
+}

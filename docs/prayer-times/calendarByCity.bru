@@ -1,0 +1,17 @@
+meta {
+  name: calendarByCity
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://api.aladhan.com/v1/calendarByCity/2017/4?city=London&country=United Kingdom&method=2
+  body: none
+  auth: none
+}
+
+params:query {
+  city: London
+  country: United Kingdom
+  method: 2
+}
