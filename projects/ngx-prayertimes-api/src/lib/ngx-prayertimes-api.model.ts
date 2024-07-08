@@ -45,6 +45,18 @@ export interface getCalendarByAddressRequest extends sharedCalendarRequest {
     address: string;
 }
 
+export interface getHijriCalendarByAddressRequest
+    extends getCalendarByAddressRequest {
+    /**
+     * A Hijri calendar year. Example: 1437.
+     */
+    year: number;
+    /**
+     * A Hijri calendar month. Example: 9 or 09 for Ramadan. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
+}
+
 export interface getCalendarByCityRequest extends sharedCalendarRequest {
     /**
      * A city name. Example: London
@@ -58,6 +70,29 @@ export interface getCalendarByCityRequest extends sharedCalendarRequest {
      * State or province. A state name or abbreviation. Examples: Colorado / CO / Punjab / Bengal
      */
     state: string;
+}
+
+export interface getHijriCalendarByCityRequest
+    extends getCalendarByCityRequest {
+    /**
+     * A Hijri calendar year. Example: 1437.
+     */
+    year: number;
+    /**
+     * A Hijri calendar month. Example: 9 or 09 for Ramadan. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
+}
+
+export interface getHijriCalendarRequest extends getCalendarRequest {
+    /**
+     * A Hijri calendar year. Example: 1437.
+     */
+    year: number;
+    /**
+     * A Hijri calendar month. Example: 9 or 09 for Ramadan. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
 }
 
 export interface getCalendarRequest extends sharedCalendarRequest {
