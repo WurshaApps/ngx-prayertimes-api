@@ -5,7 +5,7 @@ import {
     calculationMethods,
     latitudeAdjustmentMethods,
     schoolTypes,
-} from './ngx-prayertimes-api.model';
+} from './api-request.model';
 
 describe('UtilsService', () => {
     let service: UtilsService;
@@ -57,5 +57,11 @@ describe('UtilsService', () => {
         expect(result).toEqual(
             'year=2024&latitude=51.75865125&longitude=-1.25387785&method=5&tune=5%2C3%2C5%2C7%2C9%2C7&school=0&latitudeAdjustmentMethod=1&adjustment=1&iso8601=false',
         );
+    });
+
+    it('#formatDateToDDMMYYYY should return real value', async () => {
+        const result = service.formatDateToDDMMYYYY(new Date('2024-07-09'));
+        console.log(result);
+        expect(result).toEqual('09-07-2024');
     });
 });

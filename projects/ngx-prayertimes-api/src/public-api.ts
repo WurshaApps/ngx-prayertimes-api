@@ -3,4 +3,5 @@
  */
 
 export * from './lib/ngx-prayertimes-api.service';
-export * from './lib/ngx-prayertimes-api.model';
+export * from './lib/api-request.model';
+export * from './lib/api-response.model';

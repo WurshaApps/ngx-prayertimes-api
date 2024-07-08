@@ -5,13 +5,20 @@ import {
     getCalendarByAddressRequest,
     getCalendarByCityRequest,
     getCalendarRequest,
-    getCalendarResponse,
     getHijriCalendarByAddressRequest,
     getHijriCalendarByCityRequest,
     getHijriCalendarRequest,
+    getTimingsByAddressRequest,
+    getTimingsByCityRequest,
+    getTimingsRequest,
     midnightModes,
     schoolTypes,
-} from './ngx-prayertimes-api.model';
+} from './api-request.model';
+import {
+    getCalendarResponse,
+    getMethodsResponse,
+    getTimingsResponse,
+} from './api-response.model';
 import { UtilsService } from './utils.service';
 
 /**
@@ -114,5 +121,65 @@ export class NgxPrayertimesApiService {
         const month = p.month ? `/${p.month}` : '';
         const url = `${this.baseUrl}/hijriCalendarByCity/${p.year}${month}?${this.utils.toQueryString(q)}`;
         return this.http.get<getCalendarResponse>(url);
+    }
+
+    /**
+     * Returns all the prayer times calculation methods supported by this API. For more information on how to use custom methods, see https://aladhan.com/calculation-methods.
+     */
+    public getMethods(): Observable<getMethodsResponse> {
+        const url = `${this.baseUrl}/methods`;
+        return this.http.get<getMethodsResponse>(url);
+    }
+
+    /**
+     * Returns all prayer times for a specific date.
+     */
+    public getTimings(p: getTimingsRequest): Observable<getTimingsResponse> {
+        p.shafaq ??= 'general';
+        p.school ??= schoolTypes.STANDARD_SHAFI;
+        p.midnightMode ??= midnightModes.STANDARD;
+        const q = { ...p, date: undefined };
+        const date = p.date
+            ? `/${this.utils.formatDateToDDMMYYYY(p.date)}`
+            : '';
+
+        const url = `${this.baseUrl}/timings${date}?${this.utils.toQueryString(q)}`;
+        return this.http.get<getTimingsResponse>(url);
+    }
+
+    /**
+     * Returns all prayer times for a specific date at a particular address.
+     */
+    public getTimingsByAddress(
+        p: getTimingsByAddressRequest,
+    ): Observable<getTimingsResponse> {
+        p.shafaq ??= 'general';
+        p.school ??= schoolTypes.STANDARD_SHAFI;
+        p.midnightMode ??= midnightModes.STANDARD;
+        const q = { ...p, date: undefined };
+        const date = p.date
+            ? `/${this.utils.formatDateToDDMMYYYY(p.date)}`
+            : '';
+
+        const url = `${this.baseUrl}/timingsByAddress${date}?${this.utils.toQueryString(q)}`;
+        return this.http.get<getTimingsResponse>(url);
+    }
+
+    /**
+     * Returns all prayer times for a specific date in a particular city.
+     */
+    public getTimingsByCity(
+        p: getTimingsByCityRequest,
+    ): Observable<getTimingsResponse> {
+        p.shafaq ??= 'general';
+        p.school ??= schoolTypes.STANDARD_SHAFI;
+        p.midnightMode ??= midnightModes.STANDARD;
+        const q = { ...p, date: undefined };
+        const date = p.date
+            ? `/${this.utils.formatDateToDDMMYYYY(p.date)}`
+            : '';
+
+        const url = `${this.baseUrl}/timingsByCity${date}?${this.utils.toQueryString(q)}`;
+        return this.http.get<getTimingsResponse>(url);
     }
 }
