@@ -38,15 +38,29 @@ export enum latitudeAdjustmentMethods {
     ANGLE_BASED = 3,
 }
 
-export interface getCalendarRequest {
+export interface getCalendarByAddressRequest extends sharedCalendarRequest {
     /**
-     * A gregorian calendar year. Example: 2014.
+     * An address string. Example: 1420 Austin Bluffs Parkway, Colorado Springs, CO OR 25 Hampstead High Street, London, NW3 1RL, United Kingdom OR Sultanahmet Mosque, Istanbul, Turkey
      */
-    year: number;
+    address: string;
+}
+
+export interface getCalendarByCityRequest extends sharedCalendarRequest {
     /**
-     * A gregorian calendar month. Example: 8 or 08 for August. If not specified, an annual calendar will be returned.
+     * A city name. Example: London
      */
-    month?: number;
+    city: string;
+    /**
+     * A country name or 2 character alpha ISO 3166 code. Examples: GB or United Kindom
+     */
+    country: string;
+    /**
+     * State or province. A state name or abbreviation. Examples: Colorado / CO / Punjab / Bengal
+     */
+    state: string;
+}
+
+export interface getCalendarRequest extends sharedCalendarRequest {
     /**
      * The decimal value for the latitude co-ordinate of the location you want the time computed for. Example: 51.75865125
      */
@@ -55,6 +69,21 @@ export interface getCalendarRequest {
      * The decimal value for the longitude co-ordinate of the location you want the time computed for. Example: -1.25387785
      */
     longitude: number;
+    /**
+     * A valid timezone name as specified on http://php.net/manual/en/timezones.php . Example: Europe/London. If you do not specify this, we'll calcuate it using the co-ordinates you provide.
+     */
+    timezonestring?: string;
+}
+
+interface sharedCalendarRequest {
+    /**
+     * A gregorian calendar year. Example: 2014.
+     */
+    year: number;
+    /**
+     * A gregorian calendar month. Example: 8 or 08 for August. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
     /**
      * A prayer times calculation method. Methods identify various schools of thought about how to compute the timings. If not specified, it defaults to the closest authority based on the location or co-ordinates specified in the API call.
      */
@@ -66,7 +95,7 @@ export interface getCalendarRequest {
     /**
      * Comma Separated String of integers to offset timings returned by the API in minutes. Example: 5,3,5,7,9,7. See https://aladhan.com/calculation-methods
      */
-    tune: string;
+    tune?: string;
     /**
      * If you leave this empty, it defaults to Shafii.
      */
@@ -76,21 +105,17 @@ export interface getCalendarRequest {
      */
     midnightMode?: midnightModes;
     /**
-     * A valid timezone name as specified on http://php.net/manual/en/timezones.php . Example: Europe/London. If you do not specify this, we'll calcuate it using the co-ordinates you provide.
-     */
-    timezonestring?: string;
-    /**
      * Method for adjusting times higher latitudes - for instance, if you are checking timings in the UK or Sweden.
      */
-    latitudeAdjustmentMethod: latitudeAdjustmentMethods;
+    latitudeAdjustmentMethod?: latitudeAdjustmentMethods;
     /**
      * Number of days to adjust hijri date(s). Example: 1 or 2 or -1 or -2
      */
-    adjustment: 1 | 2 | -1 | -2;
+    adjustment?: 1 | 2 | -1 | -2;
     /**
      * Whether to return the prayer times in the iso8601 format. Example: true will return 2020-07-01T02:56:00+01:00 instead of 02:56
      */
-    iso8601: boolean;
+    iso8601?: boolean;
 }
 
 interface baseResponse<T> {
@@ -168,67 +193,4 @@ export interface calendarDataMeta {
         Isha: number;
         Midnight: number;
     };
-}
-
-/************************************************* */
-
-export interface hadeethsOneResponse {
-    id: string;
-    title: string;
-    /**
-     * matn
-     */
-    hadeeth: string;
-    attribution: string;
-    grade: string;
-    explanation: string;
-    /**
-     * fawaed
-     */
-    hints: string[];
-    categories: string[];
-    translations: string[];
-    words_meanings: wordsMeaning[];
-    reference: string;
-    hadeeth_ar: string;
-    explanation_ar: string;
-    hints_ar: string[];
-    words_meanings_ar: wordsMeaning[];
-    attribution_ar: string;
-    grade_ar: string;
-}
-
-export interface wordsMeaning {
-    word: string;
-    meaning: string;
-}
-
-export interface languageResponse {
-    code: string;
-    native: string;
-}
-
-export interface categoriesResponse {
-    id: string;
-    title: string;
-    hadeeths_count: string;
-    parent_id?: string;
-}
-
-export interface hadeethsListResponse {
-    data: hadeethsListData[];
-    meta: hadeethsListMeta;
-}
-
-export interface hadeethsListData {
-    id: string;
-    title: string;
-    translations: string[];
-}
-
-export interface hadeethsListMeta {
-    current_page: string;
-    last_page: number;
-    total_items: number;
-    per_page: string;
 }
