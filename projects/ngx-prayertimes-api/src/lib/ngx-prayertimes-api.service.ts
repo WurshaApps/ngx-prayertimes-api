@@ -10,6 +10,7 @@ import {
     midnightModes,
     schoolTypes,
 } from './ngx-prayertimes-api.model';
+import { UtilsService } from './utils.service';
 
 /**
  * an Angular api client for prayertimes.com
@@ -20,19 +21,10 @@ import {
 export class NgxPrayertimesApiService {
     private baseUrl = 'https://api.aladhan.com/v1';
 
-    constructor(private http: HttpClient) {}
-
-    private toQueryString(params: object): string {
-        const queryString = Object.entries(params)
-            .filter(([, value]) => value !== undefined)
-            .map(
-                ([key, value]) =>
-                    `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
-            )
-            .join('&');
-
-        return queryString;
-    }
+    constructor(
+        private http: HttpClient,
+        private utils: UtilsService,
+    ) {}
 
     /**
      * Returns all prayer times for a specific calendar month.
@@ -44,7 +36,7 @@ export class NgxPrayertimesApiService {
         p.midnightMode ??= midnightModes.STANDARD;
         const q = { ...p, month: undefined, year: undefined };
         const month = p.month ? `/${p.month}` : '';
-        const url = `${this.baseUrl}/calendar/${p.year}${month}?${this.toQueryString(q)}`;
+        const url = `${this.baseUrl}/calendar/${p.year}${month}?${this.utils.toQueryString(q)}`;
         return this.http.get<getCalendarResponse>(url);
     }
 
