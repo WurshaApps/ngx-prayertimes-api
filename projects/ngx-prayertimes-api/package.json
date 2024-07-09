@@ -1,7 +1,7 @@
 {
     "name": "@wursha/ngx-prayertimes-api",
-    "version": "0.0.3",
-    "description": "an Angular api client for aladhan.com",
+    "version": "0.0.1",
+    "description": "an Angular api client for aladhan.com/prayer-times-api",
     "keywords": [
         "prayertimes",
         "muhammad",

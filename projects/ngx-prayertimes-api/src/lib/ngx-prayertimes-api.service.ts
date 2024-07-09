@@ -22,7 +22,7 @@ import {
 import { UtilsService } from './utils.service';
 
 /**
- * an Angular api client for prayertimes.com
+ * an Angular api client for aladhan.com/prayer-times-api
  */
 @Injectable({
     providedIn: 'root',
