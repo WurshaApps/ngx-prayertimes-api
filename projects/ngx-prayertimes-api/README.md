@@ -10,14 +10,14 @@
 [![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat)]()
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/WurshaApps/ngx-prayertimes-api/pulls)
 
-> An Angular api client for [Hadeeth Encyclopedia](https://prayertimes.com)
+> An Angular api client for [Prayer Times API](https://aladhan.com/prayer-times-api)
 
-prayertimes is a project aims to provide simplified explanations and clear translation of the authentic Prophetic (Prophet Muhammad ﷺ) hadiths.
+that you can use for:
 
-Contents of the project can be used, with the following terms and conditions:
-
-1. No modification, addition, or deletion of the content.
-2. Clearly referring to the publisher and the source (prayertimes.com).
+-   Computing prayer times and prayer time calendars via co-ordinates
+-   Computing prayer times and prayer time calendars via city and country
+-   Computing prayer times and prayer time calendars via an address
+-   Computing geographic co-ordinates and timezone by city and country
 
 ## Features
 
@@ -39,18 +39,30 @@ Contents of the project can be used, with the following terms and conditions:
         -   [Yarn](#yarn)
         -   [PNPM](#pnpm)
         -   [Bun](#bun)
+    -   [Getting Started:](#getting-started)
     -   [Available API endpoints:](#available-api-endpoints)
-        -   [List all available languages for prayertimes.com](#list-all-available-languages-for-prayertimescom)
-        -   [List all categories by language code.](#list-all-categories-by-language-code)
-        -   [List root categories by language code.](#list-root-categories-by-language-code)
-        -   [List Hadeeths by category id and language iso code.](#list-hadeeths-by-category-id-and-language-iso-code)
-        -   [Get single Hadeeth details by Hadeeth id and language iso code.](#get-single-hadeeth-details-by-hadeeth-id-and-language-iso-code)
+        -   [Prayer Times Calendar](#prayer-times-calendar)
+        -   [Prayer Times Calendar by address](#prayer-times-calendar-by-address)
+        -   [Prayer Times Calendar by city](#prayer-times-calendar-by-city)
+        -   [Prayer Times Hijri Calendar](#prayer-times-hijri-calendar)
+        -   [Prayer Times Hijri Calendar by address](#prayer-times-hijri-calendar-by-address)
+        -   [Prayer Times Hijri Calendar by city](#prayer-times-hijri-calendar-by-city)
+        -   [Timings](#timings)
+        -   [Timings By Address](#timings-by-address)
+        -   [Timings By City](#timings-by-city)
+        -   [Prayer Times Methods](#prayer-times-methods)
     -   [Response models:](#response-models)
-        -   [hadeethsOneResponse](#hadeethsoneresponse)
-        -   [languageResponse](#languageresponse)
-        -   [categoriesResponse](#categoriesresponse)
-        -   [hadeethsListResponse](#hadeethslistresponse)
+        -   [getCalendarRequest](#getcalendarrequest)
+        -   [getHijriCalendarRequest](#gethijricalendarrequest)
+        -   [getTimingsRequest](#gettimingsrequest)
+        -   [sharedCalendarRequest](#sharedcalendarrequest)
+    -   [Response models:](#response-models-1)
+        -   [baseResponse](#baseresponse)
+        -   [getCalendarResponse](#getcalendarresponse)
+        -   [getTimingsResponse](#gettimingsresponse)
+        -   [getMethodsResponse](#getmethodsresponse)
     -   [Core Team](#core-team)
+    -   [Other libs from the author](#other-libs-from-the-author)
 
 <!-- TOC end -->
 
@@ -74,13 +86,13 @@ Contents of the project can be used, with the following terms and conditions:
 
 ## Getting Started:
 
-first Inject the service `NgxprayertimesApiService` anywhere you want to use it
+first Inject the service `NgxPrayertimesApiService` anywhere you want to use it
 
 ```ts
-import { NgxprayertimesApiService } from "ngx-prayertimes-api";
+import { NgxPrayertimesApiService } from "ngx-prayertimes-api";
 
 export class AppComponent {
-    constructor(public service: NgxprayertimesApiService) {}
+    constructor(public service: NgxPrayertimesApiService) {}
 }
 ```
 
@@ -98,124 +110,371 @@ now you are ready to use it.
 
 ## Available API endpoints:
 
-### List all available languages for prayertimes.com
+### Prayer Times Calendar
 
 ```ts
-getLanguages(): Observable<languageResponse[]>
+getCalendar(p: getCalendarRequest): Observable<getCalendarResponse>
 ```
 
-This endpoint returns json object containing all available languages with their iso codes and native names.
+Returns all prayer times for a specific calendar month.
 
-### List all categories by language code.
+### Prayer Times Calendar by address
 
 ```ts
-getCategoriesList(language: string): Observable<categoriesRespone[]>
+getCalendarByAddress(p: getCalendarByAddressRequest): Observable<getCalendarResponse>
 ```
 
-This endpoint accepts language iso code and returns array of json objects each object represents a category.
+Returns all prayer times for a specific calendar month at a particular address.
 
-### List root categories by language code.
+### Prayer Times Calendar by city
 
 ```ts
-getCategoriesRoots(language: string): Observable<categoriesResponse[]>g
+getCalendarByCity(p: getCalendarByCityRequest): Observable<getCalendarResponse>
 ```
 
-This endpoint returns root categories (main categories) in specific language, it accepts language iso code and returns json array of objects each object represents a root category.
+Returns all prayer times for a specific calendar month by City.
 
-### List Hadeeths by category id and language iso code.
+### Prayer Times Hijri Calendar
 
 ```ts
-getHadeethsList(p: {
-  language: string;
-  categoryId: string;
-  page: string;
-  perPage: string;
-}): Observable<hadeethsListResponse>
+getHijriCalendar(p: getHijriCalendarRequest): Observable<getCalendarResponse>
 ```
 
-This endpoint accepts language iso code, category id (both required) and page (represents page number, optional defaults to 1) and per_page (optional defaults to 20) and returns json object containing "data" object which contains array of json objects each object represents a Hadeeth basic information (id, title, translations iso codes), the second object is "meta" containing meta data required for pagination.
+Returns all prayer times for a specific Hijri calendar month.
 
-### Get single Hadeeth details by Hadeeth id and language iso code.
+### Prayer Times Hijri Calendar by address
 
 ```ts
-getHadeethsOne(p: {
-    language: string;
-    id: string;
-}): Observable<hadeethsOneResponse>
+getHijriCalendarByAddress(p: getHijriCalendarByAddressRequest): Observable<getCalendarResponse>
 ```
 
-The response differs when the language is "Arabic" or not, if it's Arabic then it returns all Hadeeth data (id, title, Hadeeth text (matn), explanation, hints (fawaed), word meaning and references), if non Arabic it returns translated parts (id, title, Hadeeth text (matn), explanation and hints (if translated), it doesnt return reference nor word meaning as they are not translated.
+Returns all prayer times for a specific Hijri calendar month at a particular address.
+
+### Prayer Times Hijri Calendar by city
+
+```ts
+getHijriCalendarByCity(p: getHijriCalendarByCityRequest): Observable<getCalendarResponse>
+```
+
+Returns all prayer times for a specific Hijri calendar month by City.
+
+### Timings
+
+```ts
+getTimings(p: getTimingsRequest): Observable<getTimingsResponse>
+```
+
+Returns all prayer times for a specific date.
+
+### Timings By Address
+
+```ts
+getTimingsByAddress(p: getTimingsByAddressRequest): Observable<getTimingsResponse>
+```
+
+Returns all prayer times for a specific date at a particular address.
+
+### Timings By City
+
+```ts
+getTimingsByCity(p: getTimingsByCityRequest): Observable<getTimingsResponse>
+```
+
+Returns all prayer times for a specific date in a particular city.
+
+### Prayer Times Methods
+
+```ts
+getMethods(): Observable<getMethodsResponse>
+```
+
+Returns all the prayer times calculation methods supported by this API. For more information on how to use custom methods, see https://aladhan.com/calculation-methods.
 
 ## Response models:
 
-### hadeethsOneResponse
+### getCalendarRequest
 
 ```ts
-interface hadeethsOneResponse {
-    id: string;
-    title: string;
-    hadeeth: string;
-    attribution: string;
-    grade: string;
-    explanation: string;
-    hints: string[];
-    categories: string[];
-    translations: string[];
-    words_meanings: wordsMeaning[];
-    reference: string;
-    hadeeth_ar: string;
-    explanation_ar: string;
-    hints_ar: string[];
-    words_meanings_ar: wordsMeaning[];
-    attribution_ar: string;
-    grade_ar: string;
+interface getCalendarRequest extends sharedCalendarWithYearMonthRequest {
+    /**
+     * The decimal value for the latitude co-ordinate of the location you want the time computed for. Example: 51.75865125
+     */
+    latitude: number;
+    /**
+     * The decimal value for the longitude co-ordinate of the location you want the time computed for. Example: -1.25387785
+     */
+    longitude: number;
+    /**
+     * A valid timezone name. Example: Europe/London. If you do not specify this, we'll calcuate it using the co-ordinates you provide.
+     */
+    timezonestring?: TimeZone;
 }
 
-interface wordsMeaning {
-    word: string;
-    meaning: string;
+interface getCalendarByAddressRequest extends sharedCalendarWithYearMonthRequest {
+    /**
+     * An address string. Example: 1420 Austin Bluffs Parkway, Colorado Springs, CO OR 25 Hampstead High Street, London, NW3 1RL, United Kingdom OR Sultanahmet Mosque, Istanbul, Turkey
+     */
+    address: string;
+}
+
+interface getCalendarByCityRequest extends sharedCalendarWithYearMonthRequest {
+    /**
+     * A city name. Example: London
+     */
+    city: string;
+    /**
+     * A country name or 2 character alpha ISO 3166 code. Examples: GB or United Kindom
+     */
+    country: string;
+    /**
+     * State or province. A state name or abbreviation. Examples: Colorado / CO / Punjab / Bengal
+     */
+    state?: string;
 }
 ```
 
-### languageResponse
+### getHijriCalendarRequest
 
 ```ts
-interface languageResponse {
-    code: string;
-    native: string;
+interface getHijriCalendarRequest extends getCalendarRequest {
+    /**
+     * A Hijri calendar year. Example: 1437.
+     */
+    year: number;
+    /**
+     * A Hijri calendar month. Example: 9 or 09 for Ramadan. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
+}
+
+interface getHijriCalendarByAddressRequest extends getCalendarByAddressRequest {
+    /**
+     * A Hijri calendar year. Example: 1437.
+     */
+    year: number;
+    /**
+     * A Hijri calendar month. Example: 9 or 09 for Ramadan. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
+}
+
+interface getHijriCalendarByCityRequest extends getCalendarByCityRequest {
+    /**
+     * A Hijri calendar year. Example: 1437.
+     */
+    year: number;
+    /**
+     * A Hijri calendar month. Example: 9 or 09 for Ramadan. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
 }
 ```
 
-### categoriesResponse
+### getTimingsRequest
 
 ```ts
-interface categoriesResponse {
-    id: string;
-    title: string;
-    hadeeths_count: string;
-    parent_id?: string;
+interface getTimingsRequest extends sharedCalendarWithDateRequest {
+    /**
+     * The decimal value for the latitude co-ordinate of the location you want the time computed for. Example: 51.75865125
+     */
+    latitude: number;
+    /**
+     * The decimal value for the longitude co-ordinate of the location you want the time computed for. Example: -1.25387785
+     */
+    longitude: number;
+    /**
+     * A valid timezone name. Example: Europe/London. If you do not specify this, we'll calcuate it using the co-ordinates you provide.
+     */
+    timezonestring?: TimeZone;
+}
+
+interface getTimingsByAddressRequest extends sharedCalendarWithDateRequest {
+    /**
+     * An address string. Example: 1420 Austin Bluffs Parkway, Colorado Springs, CO OR 25 Hampstead High Street, London, NW3 1RL, United Kingdom OR Sultanahmet Mosque, Istanbul, Turkey
+     */
+    address: string;
+}
+
+interface getTimingsByCityRequest extends sharedCalendarWithDateRequest {
+    /**
+     * A city name. Example: London
+     */
+    city: string;
+    /**
+     * A country name or 2 character alpha ISO 3166 code. Examples: GB or United Kindom
+     */
+    country: string;
+    /**
+     * State or province. A state name or abbreviation. Examples: Colorado / CO / Punjab / Bengal
+     */
+    state?: string;
 }
 ```
 
-### hadeethsListResponse
+### sharedCalendarRequest
 
 ```ts
-interface hadeethsListResponse {
-    data: hadeethsListData[];
-    meta: hadeethsListMeta;
+interface sharedCalendarWithYearMonthRequest extends sharedCalendarRequest {
+    /**
+     * A gregorian calendar year. Example: 2014.
+     */
+    year: number;
+    /**
+     * A gregorian calendar month. Example: 8 or 08 for August. If not specified, an annual calendar will be returned.
+     */
+    month?: number;
 }
 
-interface hadeethsListData {
-    id: string;
-    title: string;
-    translations: string[];
+interface sharedCalendarWithDateRequest extends sharedCalendarRequest {
+    /**
+     * Default's to the current date via an HTTP 301.
+     */
+    date: Date;
 }
 
-interface hadeethsListMeta {
-    current_page: string;
-    last_page: number;
-    total_items: number;
-    per_page: string;
+interface sharedCalendarRequest {
+    /**
+     * A prayer times calculation method. Methods identify various schools of thought about how to compute the timings. If not specified, it defaults to the closest authority based on the location or co-ordinates specified in the API call.
+     */
+    method: calculationMethods;
+    /**
+     * Which Shafaq to use if the method is Moonsighting Commitee Worldwide. Defaults to 'general'.
+     */
+    shafaq?: "general" | "ahmer" | "abyad";
+    /**
+     * Comma Separated String of integers to offset timings returned by the API in minutes. Example: 5,3,5,7,9,7. See https://aladhan.com/calculation-methods
+     */
+    tune?: string;
+    /**
+     * If you leave this empty, it defaults to Shafii.
+     */
+    school?: schoolTypes;
+    /**
+     * If you leave this empty, it defaults to Standard.
+     */
+    midnightMode?: midnightModes;
+    /**
+     * Method for adjusting times higher latitudes - for instance, if you are checking timings in the UK or Sweden.
+     */
+    latitudeAdjustmentMethod?: latitudeAdjustmentMethods;
+    /**
+     * Number of days to adjust hijri date(s). Example: 1 or 2 or -1 or -2
+     */
+    adjustment?: 1 | 2 | -1 | -2;
+    /**
+     * Whether to return the prayer times in the iso8601 format. Example: true will return 2020-07-01T02:56:00+01:00 instead of 02:56
+     */
+    iso8601?: boolean;
+}
+```
+
+## Response models:
+
+### baseResponse
+
+```ts
+interface baseResponse<T> {
+    code: number;
+    status: string;
+    data: T;
+}
+```
+
+### getCalendarResponse
+
+```ts
+type getCalendarResponse = baseResponse<calendarData[]>;
+
+interface calendarData {
+    timings: {
+        Fajr: string;
+        Sunrise: string;
+        Dhuhr: string;
+        Asr: string;
+        Sunset: string;
+        Maghrib: string;
+        Isha: string;
+        Imsak: string;
+        Midnight: string;
+    };
+    date: {
+        readable: string;
+        timestamp: string;
+        gregorian: calendarDataDate<"greg">;
+        hijri: calendarDataDate<"hijri">;
+    };
+    meta: calendarDataMeta;
+}
+
+type calendarDataDate<T extends string> = {
+    date: string;
+    format: string;
+    day: string;
+    year: string;
+    designation: {
+        abbreviated: string;
+        expanded: string;
+    };
+} & T extends "hijri"
+    ? {
+          weekday: { en: string; ar: string };
+          month: { number: number; en: string; ar: string };
+          holidays: string[];
+      }
+    : {
+          weekday: { en: string };
+          month: { number: number; en: string };
+      };
+
+interface calendarDataMeta {
+    latitude: number;
+    longitude: number;
+    timezone: string;
+    method: method;
+    latitudeAdjustmentMethod: string;
+    midnightMode: string;
+    school: string;
+    offset: {
+        Imsak: number;
+        Fajr: number;
+        Sunrise: number;
+        Dhuhr: number;
+        Asr: number;
+        Maghrib: number;
+        Sunset: number;
+        Isha: number;
+        Midnight: number;
+    };
+}
+```
+
+### getTimingsResponse
+
+```ts
+type getTimingsResponse = baseResponse<calendarData>;
+```
+
+### getMethodsResponse
+
+```ts
+type getMethodsResponse = baseResponse<methods>;
+
+type methods = Record<string, method>;
+
+interface method {
+    id: number;
+    name: string;
+    params: {
+        Fajr?: number;
+        Isha?: number | string;
+        Maghrib?: number | string;
+        Midnight?: string;
+        shafaq?: string;
+    };
+    location: {
+        latitude: number;
+        longitude: number;
+    };
 }
 ```
 
@@ -226,3 +485,10 @@ interface hadeethsListMeta {
     <td align="center"><a href="https://github.com/MuhAssar"><img src="https://avatars.githubusercontent.com/u/2022065?v=4" width="100px;" alt="Netanel Basal"/><br /><sub><b>Muhammad Assar</b></sub></a></td>
     </tr>
 </table>
+
+## Other libs from the author
+
+If you enjoy working with TypeScript, we also recommend other libraries by the same author:
+
+-   [ngx-hadeethenc-api](https://github.com/WurshaApps/ngx-hadeethenc-api/) - 🕋 🚀 Angular api client for hadeethenc.com
+-   [@wursha/ngx-hadeethenc-api](https://www.npmjs.com/package/@wursha/ngx-hadeethenc-api) - npm package with built-in type declarations
