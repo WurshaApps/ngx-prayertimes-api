@@ -1,6 +1,6 @@
 {
     "name": "@wursha/ngx-prayertimes-api",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "an Angular api client for aladhan.com/prayer-times-api",
     "keywords": [
         "prayertimes",
@@ -12,6 +12,7 @@
         "api",
         "angular",
         "ngx",
+        "typescript",
         "prayer times",
         "prayer"
     ],

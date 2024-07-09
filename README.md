@@ -51,7 +51,7 @@ that you can use for:
         -   [Timings By Address](#timings-by-address)
         -   [Timings By City](#timings-by-city)
         -   [Prayer Times Methods](#prayer-times-methods)
-    -   [Response models:](#response-models)
+    -   [Request models:](#request-models)
         -   [getCalendarRequest](#getcalendarrequest)
         -   [getHijriCalendarRequest](#gethijricalendarrequest)
         -   [getTimingsRequest](#gettimingsrequest)
@@ -190,7 +190,7 @@ getMethods(): Observable<getMethodsResponse>
 
 Returns all the prayer times calculation methods supported by this API. For more information on how to use custom methods, see https://aladhan.com/calculation-methods.
 
-## Response models:
+## Request models:
 
 ### getCalendarRequest
 
