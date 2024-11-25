@@ -482,7 +482,7 @@ interface method {
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/MuhAssar"><img src="https://avatars.githubusercontent.com/u/2022065?v=4" width="100px;" alt="Netanel Basal"/><br /><sub><b>Muhammad Assar</b></sub></a></td>
+    <td align="center"><a href="https://github.com/MuhAssar"><img src="https://avatars.githubusercontent.com/u/2022065?v=4" width="100px;" alt="Muhammad Assar"/><br /><sub><b>Muhammad Assar</b></sub></a></td>
     </tr>
 </table>
 
