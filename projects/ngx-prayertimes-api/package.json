@@ -1,6 +1,6 @@
 {
     "name": "@wursha/ngx-prayertimes-api",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "an Angular api client for aladhan.com/prayer-times-api",
     "keywords": [
         "prayertimes",
@@ -28,8 +28,8 @@
     },
     "homepage": "https://github.com/WurshaApps/ngx-prayertimes-api/tree/main/projects/ngx-prayertimes-api",
     "peerDependencies": {
-        "@angular/common": "^18.0.0",
-        "@angular/core": "^18.0.0"
+        "@angular/common": "^19.0.0||^18.0.0||^17.0.0||^16.0.0||^15.0.0",
+        "@angular/core": "^19.0.0||^18.0.0||^17.0.0||^16.0.0||^15.0.0"
     },
     "dependencies": {
         "tslib": "^2.3.0"
